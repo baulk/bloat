@@ -1,7 +1,7 @@
 //go:build gofuzz
 // +build gofuzz
 
-package s7z
+package sevenzip
 
 import (
 	"bytes"

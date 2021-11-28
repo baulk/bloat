@@ -1,4 +1,4 @@
-# go7z
+# sevenzip Fork from go7z
 
 A native Go 7z archive reader.
 
@@ -14,6 +14,7 @@ Features:
   - BCJ2
   - bzip2
   - deflate
+  - zstd
 
 ## Usage
 Extracting an archive:
@@ -25,11 +26,11 @@ import (
 	"io"
 	"os"
 
-	"github.com/saracen/go7z"
+	"github.com/baulk/bloat/sevenzip"
 )
 
 func main() {
-	sz, err := go7z.OpenReader("hello.7z")
+	sz, err := sevenzip.OpenReader("hello.7z")
 	if err != nil {
 		panic(err)
 	}

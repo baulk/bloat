@@ -8,7 +8,7 @@ import (
 	"io"
 	"sync"
 
-	"github.com/baulk/bloat/modules/s7z/filters"
+	"github.com/baulk/bloat/modules/sevenzip/filters"
 	"github.com/klauspost/compress/zstd"
 	"github.com/ulikunitz/xz/lzma"
 )

@@ -10,7 +10,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/baulk/bloat/modules/s7z/headers"
+	"github.com/baulk/bloat/modules/sevenzip/headers"
 	"github.com/baulk/bloat/modules/solidblock"
 )
 
