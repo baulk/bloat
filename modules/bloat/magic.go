@@ -2,6 +2,13 @@ package bloat
 
 import (
 	"archive/zip"
+	"errors"
+
+	"github.com/fcharlie/buna/debug/pe"
+)
+
+var (
+	ErrUnsupportArchiveFormat = errors.New("unsupport archive format")
 )
 
 type Format int
@@ -42,16 +49,28 @@ func (e *extractor) resolveFormat() error {
 	if err != nil {
 		return err
 	}
+	if format == Exe {
+		exe, err := pe.NewFile(e.fd)
+		if err != nil {
+			return err
+		}
+		if exe.OverlayLength() <= 0 {
+			return ErrUnsupportArchiveFormat
+		}
+		format, err = e.resolveFormatInternal(exe.OverlayOffset)
+		if err != nil {
+			return err
+		}
+	}
 	switch format {
 	case None:
 	case Zip:
-		_, err := zip.NewReader(e.fd, size)
-		if err != nil {
+		if _, err := zip.NewReader(e.fd, size); err != nil {
 			return err
 		}
 		return nil
 	case Tar:
-	case Exe:
+	default:
 	}
 	return nil
 }
