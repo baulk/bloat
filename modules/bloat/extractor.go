@@ -1,7 +1,6 @@
 package bloat
 
 import (
-	"io"
 	"os"
 )
 
@@ -11,36 +10,36 @@ type ExtractorOptions struct {
 }
 
 type Extractor interface {
-	Extract() error
+	Extract(cwd string, opt *ExtractorOptions) error
 	Close() error
 }
 
-type extractor struct {
-	fd         *os.File
-	closer     []io.Closer
-	r          io.Reader
-	base       int64 //archive offset
-	magicPart0 []byte
+type surfaceExtractor struct {
+	fd        *os.File
+	extractor Extractor
 }
 
-func NewExtractor(opt *ExtractorOptions) (Extractor, error) {
-
-	return &extractor{}, nil
+func NewExtractor() (Extractor, error) {
+	se := &surfaceExtractor{}
+	if err := se.createExtractor(); err != nil {
+		return nil, err
+	}
+	return se, nil
 }
 
-func (e *extractor) Extract() error {
-
+func (se *surfaceExtractor) Extract(cwd string, opt *ExtractorOptions) error {
+	if se.extractor != nil {
+		return se.extractor.Extract(cwd, opt)
+	}
 	return nil
 }
 
-func (e *extractor) Close() error {
-	for _, c := range e.closer {
-		if c != nil {
-			_ = c.Close()
-		}
+func (se *surfaceExtractor) Close() error {
+	if se.extractor != nil {
+		_ = se.extractor.Close()
 	}
-	if e.fd != nil {
-		return e.Close()
+	if se.fd != nil {
+		return se.fd.Close()
 	}
 	return nil
 }
