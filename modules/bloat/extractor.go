@@ -7,6 +7,7 @@ import (
 type ExtractorOptions struct {
 	NewFile  func(filename string) bool
 	Progress func(total, current int64) bool
+	Password string
 }
 
 type Extractor interface {

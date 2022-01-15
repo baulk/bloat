@@ -191,6 +191,9 @@ func (se *surfaceExtractor) createExtractor() error {
 	if err != nil {
 		return err
 	}
+	if _, err := se.fd.Seek(baseOffset, io.SeekStart); err != nil {
+		return err
+	}
 	archiveSize := si.Size() - baseOffset
 	switch format {
 	case ZIP:
@@ -217,6 +220,10 @@ func (se *surfaceExtractor) createExtractor() error {
 		}
 		return nil
 	case RAR:
+		se.extractor = &rarExtractor{
+			r: io.NewSectionReader(se.fd, archiveSize, archiveSize),
+		}
+		return nil
 	default:
 	}
 	return ErrUnsupportArchiveFormat
