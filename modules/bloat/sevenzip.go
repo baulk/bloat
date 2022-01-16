@@ -10,3 +10,7 @@ func (sz *sevenZipExtractor) Extract(cwd string, opt *ExtractorOptions) error {
 func (sz *sevenZipExtractor) Close() error {
 	return nil
 }
+
+var (
+	_ Extractor = &sevenZipExtractor{}
+)

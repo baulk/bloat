@@ -69,7 +69,13 @@ type zipExtractor struct {
 }
 
 func (z *zipExtractor) Extract(cwd string, opt *ExtractorOptions) error {
-
+	for _, item := range z.r.File {
+		if opt.NewFile != nil {
+			if !opt.NewFile(item.Name) {
+				break
+			}
+		}
+	}
 	return nil
 }
 
