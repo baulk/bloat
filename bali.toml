@@ -1,0 +1,10 @@
+
+# https://toml.io/en/
+name = "bloat"
+version = "1.0.0"
+dirs = ["cmd/bloat"]
+
+[[files]]
+path = "LICENSE"
+destination = "share"
+norename = true
