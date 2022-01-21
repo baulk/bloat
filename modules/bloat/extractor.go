@@ -5,9 +5,9 @@ import (
 )
 
 type ExtractorOptions struct {
-	NewFile  func(filename string) bool
-	Progress func(total, current int64) bool
-	Password string
+	OnNewFile    func(filename string) bool
+	OnProgress   func(total, current uint64) bool
+	PasswordText string
 }
 
 type Extractor interface {

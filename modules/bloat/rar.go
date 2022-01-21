@@ -14,8 +14,8 @@ type rarExtractor struct {
 
 func (e *rarExtractor) Extract(cwd string, opt *ExtractorOptions) error {
 	var options []rardecode.Option
-	if opt.Password != "" {
-		options = append(options, rardecode.Password(opt.Password))
+	if opt.PasswordText != "" {
+		options = append(options, rardecode.Password(opt.PasswordText))
 	}
 	rr, err := rardecode.NewReader(e.r, options...)
 	if err != nil {

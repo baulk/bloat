@@ -202,7 +202,9 @@ func (se *surfaceExtractor) createExtractor() error {
 		if err != nil {
 			return err
 		}
-		se.extractor = &zipExtractor{r: zr}
+		ze := &zipExtractor{r: zr}
+		ze.prepare()
+		se.extractor = ze
 		return nil
 	case XZ:
 		fallthrough

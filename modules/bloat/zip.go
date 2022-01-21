@@ -65,13 +65,29 @@ func zipRegister() {
 }
 
 type zipExtractor struct {
-	r *zip.Reader
+	r                *zip.Reader
+	uncompressedSize uint64
+	compressedSize   uint64
+}
+
+func (z *zipExtractor) prepare() {
+	for _, i := range z.r.File {
+		z.uncompressedSize += i.UncompressedSize64
+		z.compressedSize += i.CompressedSize64
+	}
 }
 
 func (z *zipExtractor) Extract(cwd string, opt *ExtractorOptions) error {
+	var extractedSize uint64
 	for _, item := range z.r.File {
-		if opt.NewFile != nil {
-			if !opt.NewFile(item.Name) {
+		if opt.OnNewFile != nil {
+			if !opt.OnNewFile(item.Name) {
+				break
+			}
+		}
+		extractedSize += item.UncompressedSize64
+		if opt.OnProgress != nil {
+			if !opt.OnProgress(z.uncompressedSize, extractedSize) {
 				break
 			}
 		}
