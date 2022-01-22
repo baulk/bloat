@@ -1,8 +1,11 @@
 package bloat
 
 import (
+	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 )
 
@@ -46,4 +49,50 @@ func MakeFlattened(src, dest string) error {
 			filepath.Join(dest, item.Name()))
 	}
 	return os.RemoveAll(subfirst)
+}
+
+var (
+	ErrDangerousPathAccessDenied = errors.New("dangerous path access denied")
+)
+
+func JoinSanitizePath(parent string, elem ...string) (string, error) {
+	var buf strings.Builder
+	_, _ = buf.WriteString(parent)
+	for _, e := range elem {
+		_ = buf.WriteByte(os.PathSeparator)
+		_, _ = buf.WriteString(e)
+	}
+	out := filepath.Clean(buf.String())
+	if len(out) <= len(parent) {
+		return "", ErrDangerousPathAccessDenied
+	}
+	if strings.HasPrefix(out, parent) && os.IsPathSeparator(out[len(parent)]) {
+		return out, nil
+	}
+	if runtime.GOOS != "windows" && parent == "/" {
+		return out, nil
+	}
+	return "", ErrDangerousPathAccessDenied
+}
+
+func JoinSanitizePathSlow(parent string, elem ...string) (string, error) {
+	parent = filepath.Clean(parent)
+	return JoinSanitizePath(parent, elem...)
+}
+
+func Symlink(oldname string, newname string) error {
+	if err := os.MkdirAll(filepath.Dir(newname), 0755); err != nil {
+		return fmt.Errorf("%s: making directory for file: %v", newname, err)
+	}
+
+	if _, err := os.Lstat(newname); err == nil {
+		if err = os.Remove(newname); err != nil {
+			return fmt.Errorf("%s: failed to unlink: %+v", newname, err)
+		}
+	}
+
+	if err := os.Symlink(oldname, newname); err != nil {
+		return fmt.Errorf("%s: making symbolic link for: %v", newname, err)
+	}
+	return nil
 }
