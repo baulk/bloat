@@ -1,6 +1,10 @@
 package main
 
-import "github.com/baulk/bloat/modules/semver"
+import (
+	"strings"
+
+	"github.com/baulk/bloat/modules/semver"
+)
 
 type ScoopLink struct {
 	URL  string `json:"url,omitempty"`
@@ -72,4 +76,25 @@ type Metadata struct {
 
 func (m *Metadata) Compare(s *ScoopMetadata) int {
 	return semver.Compare(m.Version, s.Version)
+}
+
+func (m *Metadata) From(s *ScoopMetadata) bool {
+	if semver.Compare(m.Version, s.Version) <= 0 {
+		return false
+	}
+	if len(s.URL) != 0 {
+		if strings.HasPrefix(s.Hash, "md5:") {
+			return false
+		}
+		m.URL = s.URL
+		m.Hash = s.Hash
+		m.Version = s.Version
+		return true
+	}
+	a := s.Architecture
+	if a == nil {
+		return false
+	}
+
+	return false
 }
