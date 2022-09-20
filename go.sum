@@ -3,8 +3,8 @@ github.com/baulk/chardet v0.1.0/go.mod h1:0ibN6068qswel5Hv54U7GNJUU57njfzPJrLIq7
 github.com/dsnet/compress v0.0.1 h1:PlZu0n3Tuv04TzpfPbrnI0HW/YwodEXDS+oPKahKF0Q=
 github.com/dsnet/compress v0.0.1/go.mod h1:Aw8dCMJ7RioblQeTqt88akK31OvO8Dhf5JflhBbQEHo=
 github.com/dsnet/golib v0.0.0-20171103203638-1ea166775780/go.mod h1:Lj+Z9rebOhdfkVLjJ8T6VcRQv3SXugXy999NBtR9aFY=
-github.com/fcharlie/buna v0.5.2 h1:ek9e0V8DZfrJM5/9aUdOF53ADUW7djw4Qc3PlTz6QoU=
-github.com/fcharlie/buna v0.5.2/go.mod h1:OPlLfvgU5jans7ZthrJu6EGlrLRZfpE9vZyYcgLcccU=
+github.com/fcharlie/buna v0.5.3 h1:HdMLLRyzxsjEJZJjh2hWfgwzMORH/Erqp7c9NRNBYz4=
+github.com/fcharlie/buna v0.5.3/go.mod h1:OPlLfvgU5jans7ZthrJu6EGlrLRZfpE9vZyYcgLcccU=
 github.com/klauspost/compress v1.4.1/go.mod h1:RyIbtBH6LamlWaDj8nUwkbUhJ87Yi3uG0guNDohfE1A=
 github.com/klauspost/compress v1.15.10 h1:Ai8UzuomSCDw90e1qNMtb15msBXsNpH6gzkkENQNcJo=
 github.com/klauspost/compress v1.15.10/go.mod h1:QPwzmACJjUTFsnSHH934V6woptycfrDDJnH7hvFVbGM=
