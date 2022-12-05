@@ -8,7 +8,7 @@ require (
 	github.com/klauspost/compress v1.15.12
 	github.com/nwaples/rardecode/v2 v2.0.0-beta.2
 	github.com/ulikunitz/xz v0.5.10
-	golang.org/x/text v0.4.0
+	golang.org/x/text v0.5.0
 )
 
 require github.com/baulk/chardet v0.1.0
