@@ -7,7 +7,7 @@ require (
 	github.com/fcharlie/buna v0.6.0
 	github.com/klauspost/compress v1.17.6
 	github.com/nwaples/rardecode/v2 v2.0.0-beta.2
-	github.com/ulikunitz/xz v0.5.11
+	github.com/ulikunitz/xz v0.5.12
 	golang.org/x/text v0.14.0
 )
 
