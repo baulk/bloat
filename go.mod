@@ -1,6 +1,6 @@
 module github.com/baulk/bloat
 
-go 1.18
+go 1.22
 
 require (
 	github.com/dsnet/compress v0.0.1
